@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elora Leads — Reach travelers before they book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10242B;        /* deep teal-ink, dominant dark */
+    --ink-soft:#2C4750;
+    --paper:#F3EFE6;       /* warm document paper */
+    --paper-deep:#E8E1D2;
+    --stamp:#C64A2E;       /* passport-stamp vermilion, the one accent */
+    --stamp-soft:#D9633F;
+    --sea:#1C7C86;         /* teal-sea, secondary */
+    --sea-light:#3FA6A8;
+    --line:#CFC6B4;
+    --white:#FCFAF5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+  .mono{font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.04em}
+  .disp{font-family:'Fraunces',serif}
+
+  /* eyebrow / labels encode the "stamp" motif */
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--stamp);
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--stamp);display:inline-block}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(243,239,230,.86);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1120px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:17px;letter-spacing:-.01em}
+  .brand .seal{
+    width:30px;height:30px;border:2px solid var(--ink);border-radius:50%;
+    display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+    transform:rotate(-8deg);color:var(--ink);
+  }
+  .nav-cta{
+    font-size:14px;font-weight:600;color:var(--white);background:var(--ink);
+    padding:10px 20px;border-radius:2px;text-decoration:none;transition:background .2s;
+  }
+  .nav-cta:hover{background:var(--stamp)}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 0 76px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  h1{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(42px,5.6vw,72px);line-height:1.02;letter-spacing:-.02em;
+    margin:22px 0 24px;
+  }
+  h1 em{font-style:italic;color:var(--stamp)}
+  .lede{font-size:19px;line-height:1.6;color:var(--ink-soft);max-width:34ch;margin-bottom:34px}
+  .btns{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn-primary{
+    background:var(--stamp);color:var(--white);font-weight:600;font-size:16px;
+    padding:15px 30px;border-radius:2px;text-decoration:none;border:none;cursor:pointer;
+    transition:transform .15s, background .2s;display:inline-block;
+  }
+  .btn-primary:hover{background:var(--stamp-soft);transform:translateY(-2px)}
+  .btn-ghost{
+    color:var(--ink);font-weight:600;font-size:16px;padding:15px 8px;text-decoration:none;
+    border-bottom:2px solid transparent;transition:border-color .2s;
+  }
+  .btn-ghost:hover{border-color:var(--ink)}
+
+  /* passport-card visual — the signature element */
+  .passport{
+    background:var(--ink);color:var(--paper);border-radius:6px;
+    padding:30px 30px 26px;position:relative;overflow:hidden;
+    box-shadow:0 30px 60px -28px rgba(16,36,43,.55);
+    transform:rotate(1.4deg);
+  }
+  .passport::after{
+    content:"ELORA";position:absolute;right:-18px;top:26px;
+    font-family:'IBM Plex Mono',monospace;font-size:64px;font-weight:500;
+    color:rgba(198,74,46,.16);letter-spacing:.1em;transform:rotate(-14deg);pointer-events:none;
+  }
+  .pp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--sea-light)}
+  .pp-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed rgba(243,239,230,.16);font-size:14px}
+  .pp-row span:first-child{color:#9FB7BB}
+  .pp-row span:last-child{font-weight:600;font-family:'IBM Plex Mono',monospace;letter-spacing:.02em}
+  .pp-stamp{
+    margin-top:20px;display:inline-flex;align-items:center;gap:9px;
+    border:2px solid var(--stamp);color:var(--stamp);border-radius:3px;
+    padding:7px 13px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    transform:rotate(-3deg);
+  }
+  .pp-stamp .dot{width:7px;height:7px;border-radius:50%;background:var(--stamp)}
+
+  /* ---------- STAT STRIP ---------- */
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper-deep)}
+  .strip-in{display:grid;grid-template-columns:repeat(4,1fr);max-width:1120px;margin:0 auto}
+  .stat{padding:34px 28px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{font-family:'Fraunces',serif;font-size:40px;font-weight:500;line-height:1;color:var(--ink);letter-spacing:-.01em}
+  .stat .n small{font-size:22px;color:var(--sea)}
+  .stat .l{font-size:13px;color:var(--ink-soft);margin-top:9px;line-height:1.4}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section.blk{padding:82px 0}
+  .h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(30px,3.6vw,44px);line-height:1.08;letter-spacing:-.015em;margin:18px 0 0;max-width:20ch}
+  .sub{font-size:18px;color:var(--ink-soft);margin-top:18px;max-width:52ch}
+
+  /* why-warm: 3 cards */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:5px;padding:30px 26px;transition:transform .18s, box-shadow .18s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(16,36,43,.4)}
+  .card .cnum{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--stamp);letter-spacing:.14em}
+  .card h3{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin:14px 0 10px;letter-spacing:-.01em}
+  .card p{font-size:15px;color:var(--ink-soft);line-height:1.6}
+
+  /* how it works — real sequence, numbering justified */
+  .flow{background:var(--ink);color:var(--paper)}
+  .flow .h2{color:var(--white)}
+  .flow .sub{color:#A9C0C4}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:54px}
+  .step{padding:0 26px;border-left:1px solid rgba(243,239,230,.16);position:relative}
+  .step:first-child{padding-left:0;border-left:none}
+  .step .sn{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--sea-light);letter-spacing:.1em}
+  .step h4{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:16px 0 10px;color:var(--white)}
+  .step p{font-size:14.5px;color:#A9C0C4;line-height:1.6}
+
+  /* pricing */
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:52px;align-items:stretch}
+  .plan{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:36px 34px;display:flex;flex-direction:column}
+  .plan.feature{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .plan .pk{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--stamp)}
+  .plan.feature .pk{color:var(--sea-light)}
+  .plan .pp{font-family:'Fraunces',serif;font-size:52px;font-weight:500;line-height:1;margin:16px 0 6px;letter-spacing:-.02em}
+  .plan .pp small{font-size:18px;color:var(--ink-soft);font-family:'Inter';font-weight:500}
+  .plan.feature .pp small{color:#A9C0C4}
+  .plan .pnote{font-size:14px;color:var(--ink-soft);margin-bottom:22px}
+  .plan.feature .pnote{color:#A9C0C4}
+  .plan ul{list-style:none;margin:0 0 26px;display:flex;flex-direction:column;gap:12px}
+  .plan li{font-size:15px;display:flex;gap:11px;align-items:flex-start;line-height:1.45}
+  .plan li::before{content:"→";color:var(--stamp);font-weight:600;flex-shrink:0}
+  .plan.feature li::before{color:var(--sea-light)}
+  .plan .btn-primary{margin-top:auto;text-align:center}
+  .plan.feature .btn-primary{background:var(--stamp)}
+
+  /* honesty note */
+  .note{background:var(--paper-deep);border:1px solid var(--line);border-radius:5px;padding:22px 26px;margin-top:34px;display:flex;gap:16px;align-items:flex-start}
+  .note .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--stamp);border:1px solid var(--stamp);border-radius:3px;padding:4px 8px;flex-shrink:0;margin-top:2px}
+  .note p{font-size:14.5px;color:var(--ink-soft);line-height:1.6}
+
+  /* form */
+  .cta-final{background:var(--sea);color:var(--white)}
+  .cta-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .cta-final .h2{color:var(--white)}
+  .cta-final .sub{color:rgba(252,250,245,.85)}
+  form{background:var(--white);border-radius:8px;padding:34px;box-shadow:0 30px 60px -30px rgba(16,36,43,.5)}
+  form label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin:0 0 7px}
+  form .fld{margin-bottom:18px}
+  form input,form select{
+    width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:4px;
+    font-family:'Inter';font-size:15px;color:var(--ink);background:var(--paper);
+  }
+  form input:focus,form select:focus{outline:2px solid var(--sea);border-color:var(--sea)}
+  form button{width:100%;margin-top:6px}
+  .formnote{font-size:12.5px;color:var(--ink-soft);margin-top:14px;text-align:center}
+
+  footer{background:var(--ink);color:#8CA6AB;padding:38px 0;font-size:14px}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .foot-in .brand{color:var(--paper)}
+  .foot-in .seal{border-color:var(--paper);color:var(--paper)}
+
+  @media(max-width:860px){
+    .hero-grid,.cta-wrap{grid-template-columns:1fr;gap:40px}
+    .strip-in{grid-template-columns:1fr 1fr}
+    .stat:nth-child(2){border-right:none}
+    .stat{border-bottom:1px solid var(--line)}
+    .cards,.steps,.price-grid{grid-template-columns:1fr;gap:18px}
+    .step{border-left:none;border-top:1px solid rgba(243,239,230,.16);padding:22px 0 0}
+    .step:first-child{padding-top:0;border-top:none}
+    .passport{transform:rotate(0)}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 20px}.nav-in{padding:14px 20px}
+    .strip-in{grid-template-columns:1fr}
+    .stat{border-right:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><span class="seal">EL</span> Elora&nbsp;Leads</div>
+    <a href="#start" class="nav-cta">Request access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Pre-trip intent · for travel advisors</span>
+      <h1>Reach travelers <em>before</em> they book.</h1>
+      <p class="lede">We surface people the moment they secure an expedited passport — often weeks before they've booked a flight, a hotel, or anything else. That's the earliest a travel advisor can reach them.</p>
+      <div class="btns">
+        <a href="#start" class="btn-primary">Request lead access</a>
+        <a href="#how" class="btn-ghost">See how it works →</a>
+      </div>
+    </div>
+    <aside class="passport" aria-label="Example lead record">
+      <div class="pp-top"><span>LEAD RECORD</span><span>NO. 132024</span></div>
+      <div class="pp-row"><span>Destination</span><span>EUROPE</span></div>
+      <div class="pp-row"><span>Departs in</span><span>~3 DAYS</span></div>
+      <div class="pp-row"><span>Trip booked?</span><span>NOT YET</span></div>
+      <div class="pp-row"><span>Party size</span><span>2 ADULTS</span></div>
+      <div class="pp-stamp"><span class="dot"></span> HIGH INTENT · UNBOOKED</div>
+    </aside>
+  </div>
+</header>
+
+<!-- STAT STRIP -->
+<div class="strip">
+  <div class="strip-in">
+    <div class="stat"><div class="n">~370<small>/mo</small></div><div class="l">international travelers surface through the passport pipeline</div></div>
+    <div class="stat"><div class="n">15<small> days</small></div><div class="l">median window from passport order to departure</div></div>
+    <div class="stat"><div class="n">55<small>%</small></div><div class="l">are on an urgent, near-term travel timeline</div></div>
+    <div class="stat"><div class="n">~90<small>%</small></div><div class="l">visa-free short-haul: cruises, Caribbean, Mexico, Europe</div></div>
+  </div>
+</div>
+
+<!-- WHY WARM -->
+<section class="blk">
+  <div class="wrap">
+    <span class="eyebrow">Why these leads are different</span>
+    <h2 class="h2">Not a cold list. A person mid-decision.</h2>
+    <p class="sub">Most travel leads are stale by the time you get them — already booked, already home, or never real. These are captured at the one moment the trip is certain but the details aren't.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="cnum">01</div>
+        <h3>The trip is real</h3>
+        <p>They've paid for an expedited passport with a fixed departure date. This isn't someone idly browsing — the travel is committed and dated.</p>
+      </div>
+      <div class="card">
+        <div class="cnum">02</div>
+        <h3>Often not yet booked</h3>
+        <p>A meaningful share secure the passport before locking flights or hotels. You reach them while there's still a trip left to sell.</p>
+      </div>
+      <div class="card">
+        <div class="cnum">03</div>
+        <h3>You're there first</h3>
+        <p>Before the airline, the OTA, or the insurer sees them. Earliest touchpoint in the journey means the warmest possible hand-off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="blk flow" id="how">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2 class="h2">Consent-first. Filtered. Yours.</h2>
+    <p class="sub">Every lead is opt-in at the source and screened before it reaches you. You only pay for travelers matched to what you actually sell.</p>
+    <div class="steps">
+      <div class="step"><div class="sn">STEP 01</div><h4>Opt-in at source</h4><p>Travelers explicitly agree to be connected with travel partners when they place their passport order. No scraped or resold data.</p></div>
+      <div class="step"><div class="sn">STEP 02</div><h4>Screened for fit</h4><p>We filter for the travelers worth your time — new trips over renewals, unbooked over already-booked, matched to your destinations.</p></div>
+      <div class="step"><div class="sn">STEP 03</div><h4>Delivered fast</h4><p>Because the clock is short, leads reach you quickly — while there's still runway to win the booking before they depart.</p></div>
+      <div class="step"><div class="sn">STEP 04</div><h4>You close</h4><p>Name, destination, and travel window land in your inbox. You do what you do best — turn an intent signal into a booked trip.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="blk">
+  <div class="wrap">
+    <span class="eyebrow">Access</span>
+    <h2 class="h2">Two ways to work with us.</h2>
+    <p class="sub">Start small to test lead quality against your own conversion, then lock in volume once you've seen it work.</p>
+    <div class="price-grid">
+      <div class="plan">
+        <div class="pk">Pay per lead</div>
+        <div class="pp">$18<small> / lead</small></div>
+        <div class="pnote">Shared availability · no commitment</div>
+        <ul>
+          <li>Buy leads individually as they surface</li>
+          <li>Destination &amp; travel-window filters</li>
+          <li>Test quality before you scale</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <a href="#start" class="btn-primary">Start with pay-per-lead</a>
+      </div>
+      <div class="plan feature">
+        <div class="pk">Exclusive monthly</div>
+        <div class="pp">$1,200<small> / mo</small></div>
+        <div class="pnote">First look · priority routing by region</div>
+        <ul>
+          <li>Exclusive first access to matched leads</li>
+          <li>Priority routing for your destinations</li>
+          <li>Higher volume at a lower effective rate</li>
+          <li>Direct line for lead-quality feedback</li>
+        </ul>
+        <a href="#start" class="btn-primary">Request exclusive access</a>
+      </div>
+    </div>
+    <div class="note">
+      <span class="tag">STRAIGHT TALK</span>
+      <p>Prices shown are our launch rates while we validate lead quality with a first cohort of advisors. We'd rather earn your volume than lock you in — start on pay-per-lead, judge the conversion against your own numbers, and scale only if it works.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA / FORM -->
+<section class="blk cta-final" id="start">
+  <div class="wrap cta-wrap">
+    <div>
+      <span class="eyebrow" style="color:var(--white)">Request access</span>
+      <h2 class="h2">Tell us what you sell.</h2>
+      <p class="sub">We're onboarding a small first group of advisors. Share your destinations and we'll match you to travelers heading there — and be honest with you about volume.</p>
+    </div>
+    <form onsubmit="handleSubmit(event)">
+      <div class="fld">
+        <label for="name">Your name</label>
+        <input id="name" type="text" placeholder="Jane Advisor" required>
+      </div>
+      <div class="fld">
+        <label for="agency">Agency</label>
+        <input id="agency" type="text" placeholder="Sunspot Travel Co." required>
+      </div>
+      <div class="fld">
+        <label for="email">Work email</label>
+        <input id="email" type="email" placeholder="jane@sunspottravel.com" required>
+      </div>
+      <div class="fld">
+        <label for="dest">Destinations you sell most</label>
+        <select id="dest">
+          <option>Caribbean &amp; cruises</option>
+          <option>Mexico &amp; Central America</option>
+          <option>Europe</option>
+          <option>Multiple / all of the above</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label for="plan">Interested in</label>
+        <select id="plan">
+          <option>Pay per lead — test first</option>
+          <option>Exclusive monthly</option>
+          <option>Not sure yet — let's talk</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary">Request access</button>
+      <p class="formnote">No payment now. We'll reach out to confirm fit and volume.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <div class="brand"><span class="seal">EL</span> Elora&nbsp;Leads</div>
+    <div>Consent-first travel leads · Orlando, FL</div>
+  </div>
+</footer>
+
+<script>
+  function handleSubmit(e){
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = "Request received ✓";
+    btn.style.background = "#1C7C86";
+    setTimeout(()=>{ e.target.reset(); btn.textContent="Request access"; btn.style.background=""; }, 2600);
+  }
+</script>
+</body>
+</html>
